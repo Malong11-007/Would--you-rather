@@ -2,19 +2,9 @@ import React, { Component } from 'react';
 import { _getQuestions } from '../_DATA';
 import Question from './Question';
 
-class QuestionList extends Component {
-  state = {
-    questions : null
-  }
 
-  async componentDidMount(){
-    try {
-      const question = await _getQuestions();
-      this.setState({questions : question})
-    } catch (e) {
-      console.log(e)
-    }
-  }
+class QuestionList extends Component {
+
 
   render() {
     return (
