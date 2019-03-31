@@ -1,5 +1,18 @@
-import { GET_QUESTIONS , GET_USERS , ERROR } from './types'
-import { _getQuestions , _getUsers } from './_DATA'
+import { GET_QUESTIONS , GET_USERS , ERROR , LOGGED_USER , LOG_OUT_USER }  from './types'
+import { _getQuestions , _getUsers , _saveQuestionAnswer , _saveQuestion } from './_DATA'
+
+export const loggedUser = (payload) => {
+    return {
+        type : LOGGED_USER,
+        payload
+    }
+}
+
+export const logOutUser = () => {
+    return {
+        type : LOG_OUT_USER,
+    }
+}
 
 export const storeUsers = (payload) => {
     return {
@@ -44,3 +57,30 @@ export const getQuestionsThunk = () => {
         }
     }
 }
+
+export const saveQuestionThunk = (authedUser,qid,answer) => {
+    return async dispatch => {
+        try{
+            console.log("Reached action from saveQuestionthunk")
+            await _saveQuestionAnswer({authedUser,qid,answer});
+            const users = await _getUsers();
+            console.log("--------------",users)
+            dispatch(getUsersThunk(users));
+        } catch (e) {
+            dispatch(error(e))
+        }
+    }
+}
+
+export const addQuestionThunk = (question) => {
+    return async dispatch => {
+        try{
+            await _saveQuestion(question)
+            dispatch(getQuestionsThunk());
+            dispatch(getUsersThunk());
+        } catch (e) {
+            dispatch(error(e))
+        }
+    }
+}
+

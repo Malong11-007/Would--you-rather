@@ -2,7 +2,7 @@ let users = {
   sarahedo: {
     id: 'sarahedo',
     name: 'Sarah Edo',
-    avatarURL:  "",
+    avatarURL:  "https://avataaars.io/?avatarStyle=Circle&topType=LongHairStraight&accessoriesType=Blank&hairColor=BrownDark&facialHairType=Blank&clotheType=BlazerShirt&eyeType=Default&eyebrowType=Default&mouthType=Default&skinColor=Light",
     answers: {
       "8xf0y6ziyjabvozdd253nd": 'optionOne',
       "6ni6ok3ym7mf1p33lnez": 'optionTwo',
@@ -14,7 +14,7 @@ let users = {
   tylermcginnis: {
     id: 'tylermcginnis',
     name: 'Tyler McGinnis',
-    avatarURL: "",
+    avatarURL: "https://avataaars.io/?avatarStyle=Circle&topType=ShortHairFrizzle&accessoriesType=Sunglasses&hairColor=BrownDark&facialHairType=BeardMagestic&facialHairColor=BlondeGolden&clotheType=ShirtCrewNeck&clotheColor=PastelBlue&eyeType=Close&eyebrowType=SadConcerned&mouthType=Disbelief&skinColor=Light",
     answers: {
       "vthrdm985a262al8qx3do": 'optionOne',
       "xj352vofupe1dqz9emx13r": 'optionTwo',
@@ -24,7 +24,7 @@ let users = {
   johndoe: {
     id: 'johndoe',
     name: 'John Doe',
-    avatarURL: "",
+    avatarURL: "https://avataaars.io/?avatarStyle=Circle&topType=WinterHat3&accessoriesType=Wayfarers&hatColor=Blue03&facialHairType=Blank&facialHairColor=Platinum&clotheType=CollarSweater&clotheColor=White&eyeType=Default&eyebrowType=UpDownNatural&mouthType=ScreamOpen&skinColor=Pale",
     answers: {
       "xj352vofupe1dqz9emx13r": 'optionOne',
       "vthrdm985a262al8qx3do": 'optionTwo',
@@ -166,12 +166,16 @@ export function _saveQuestion (question) {
         }
       }
 
+
       res(formattedQuestion)
+
     }, 1000)
+    console.log("response from res",formattedQuestion)
   })
 }
 
 export function _saveQuestionAnswer ({ authedUser, qid, answer }) {
+  console.log({ authedUser, qid, answer })
   return new Promise((res, rej) => {
     setTimeout(() => {
       users = {
@@ -184,19 +188,20 @@ export function _saveQuestionAnswer ({ authedUser, qid, answer }) {
           }
         }
       }
-
       questions = {
         ...questions,
         [qid]: {
           ...questions[qid],
           [answer]: {
             ...questions[qid][answer],
-            votes: questions[qid][answer].votes.concat([authedUser])
+           votes: questions[qid][answer].votes.concat([authedUser])
           }
         }
       }
+
 
       res()
     }, 500)
   })
 }
+
