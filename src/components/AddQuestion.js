@@ -1,11 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { } from "../Actions";
 import Container from "reactstrap/es/Container";
 import InvalidPage from "./InvalidPage";
-import { Jumbotron , Button , Input , Form , FormGroup ,Label} from 'reactstrap';
+import { Jumbotron ,Input , Form , FormGroup ,Label } from 'reactstrap';
 import { addQuestionThunk } from "../Actions";
 import AppBar from "./AppBar";
+import {Link} from "react-router-dom";
 
 
 class AddQuestion extends React.Component {
@@ -20,19 +20,19 @@ class AddQuestion extends React.Component {
   }
 
   onSubmit = (e) => {
-    e.preventDefault();
     this.props.addQuestionThunk(this.state)
+
   }
 
   render(){
+
     return (
       <Container>
         {
 
           this.props.loggedInUser !== "" ?
             <div>
-              <AppBar user={this.props.loggedInUser}/>
-              {console.log(this.state)}
+              <AppBar user={this.props.loggedInUser}  userName={this.props.users[this.props.loggedInUser].name} logOutUser={this.props.logOutUser}/>
               <Jumbotron>
                 <h1 className="display-5">Add Question</h1>
                 <hr className="my-2" />
@@ -58,7 +58,7 @@ class AddQuestion extends React.Component {
                            onChange={(e) => this.onInputChange(e)}
                     />
                   </FormGroup>
-                  <Button onClick={(e) => this.onSubmit(e)} color="info">Ask Now</Button>
+                  <Link onClick={(e) => this.onSubmit(e)} className="btn btn-sm btn-outline-info" to="/Home" >Ask Now</Link>
                 </Form>
 
               </Jumbotron>
@@ -72,7 +72,7 @@ class AddQuestion extends React.Component {
 
 const mapStateToProps = (state) => ({
   loggedInUser : state.loggedInUser,
-
+  users : state.users
 })
 
 const mapActionsToProps = ({

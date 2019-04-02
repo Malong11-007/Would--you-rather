@@ -1,4 +1,6 @@
 import React from 'react';
+import { NavLink } from "react-router-dom";
+import { NavItem } from "reactstrap";
 
 export default class AppBar extends React.Component {
 
@@ -6,20 +8,27 @@ export default class AppBar extends React.Component {
     return (
       <div>
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
-          <a className="navbar-brand" >Would u Rather</a>
+          <NavItem className="navbar-brand" >Would u Rather</NavItem>
 
             <ul className="navbar-nav mr-auto">
               <li className="nav-item ">
-                <a className="nav-link" href="/Home">Home</a>
+                <NavLink activeClassName="active" className="nav-link" to="/Home">Home</NavLink>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="/AddQuestion">Add Question</a>
+                <NavLink activeClassName="active" className="nav-link" to="/AddQuestion">Add Question</NavLink>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="/leaderboard">Leaders Board</a>
+                <NavLink activeClassName="active" className="nav-link" to="/leaderboard">Leaders Board</NavLink>
               </li>
             </ul>
-          <a className="nav-link" href="/" onClick={this.props.logOutUser}>{ this.props.user } : Logout</a>
+          <ul className="navbar-nav ml-auto">
+            <li className="nav-item">
+              <NavLink activeClassName="active" className="nav-link" to="/Home">Hello, {this.props.userName}</NavLink>
+            </li>
+          </ul>
+
+
+            <NavLink activeClassName="active" className="nav-link" exact to="/" onClick={this.props.logOutUser}>Logout</NavLink>
         </nav>
       </div>
     );

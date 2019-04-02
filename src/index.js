@@ -9,34 +9,34 @@ import App from './App'
 import './index.css'
 
 
-const saveToLocalStorage =(state) => {
-  try{
-    const serializedState = JSON.stringify(state);
-    localStorage.setItem('state' , serializedState)
-  } catch (e) {
-    console.log(e)
-  }
-}
-
-const loadFromLocalStorage =() => {
-  try{
-      const serializedState = localStorage.getItem('state');
-      if(serializedState === null) return undefined
-      return JSON.parse(serializedState)
-  } catch (e) {
-      return undefined
-  }
-}
-
-
-const persistedState = loadFromLocalStorage();
+// const saveToLocalStorage =(state) => {
+//   try{
+//     const serializedState = JSON.stringify(state);
+//     localStorage.setItem('state' , serializedState)
+//   } catch (e) {
+//     console.log(e)
+//   }
+// }
+//
+// const loadFromLocalStorage =() => {
+//   try{
+//       const serializedState = localStorage.getItem('state');
+//       if(serializedState === null) return undefined
+//       return JSON.parse(serializedState)
+//   } catch (e) {
+//       return undefined
+//   }
+// }
+//
+//
+// const persistedState = loadFromLocalStorage();
 
 const enhancer =  compose(applyMiddleware(thunk),window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
-const store = createStore(rootReducer,persistedState,enhancer)
+const store = createStore(rootReducer,enhancer)
 
 
-store.subscribe(() => saveToLocalStorage(store.getState()));
+// store.subscribe(() => saveToLocalStorage(store.getState()));
 
 ReactDOM.render(<Provider store={store}><App />
                 </Provider>, document.getElementById('root'))

@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import AppBar from './AppBar'
 import { connect } from  'react-redux';
-import { TabContent, TabPane, Nav, NavItem, NavLink, Card, Button, CardTitle, CardText, Row, Col } from 'reactstrap';
+import { TabContent, TabPane, Nav, NavItem, NavLink,Row} from 'reactstrap';
 import {getQuestionsThunk, getUsersThunk, logOutUser, saveQuestionThunk} from '../Actions'
 import { Container } from 'reactstrap';
-import Question from './Question'
-import { Link } from 'react-router-dom'
+import QuestionView from './QuestionView'
 import InvalidPage from "./InvalidPage";
 
 class Dashboard extends Component {
@@ -42,10 +41,11 @@ class Dashboard extends Component {
   render() {
     return (
       <Container>
+
         {
           this.props.loggedInUser !== "" ?
-            <div className="container h-100  justify-content-center">
-              <AppBar user={this.props.loggedInUser} logOutUser={this.props.logOutUser}/>
+            <div>
+              <AppBar user={this.props.loggedInUser}  userName={this.props.users[this.props.loggedInUser].name} logOutUser={this.props.logOutUser}/>
               <Nav tabs>
                 <NavItem>
                   <NavLink
@@ -67,8 +67,7 @@ class Dashboard extends Component {
                     {this.props.questions !==null  && this.state.filterQuestions !== null &&
                     Object.values(this.props.questions).filter((item) => (
                       Object.keys(this.state.filterQuestions).includes(item.id)
-                    )).map((item) => (<Row key={item.id}><Question user={this.props.loggedInUser}
-                                 saveQuestion={this.props.saveQuestionThunk} question={item}/></Row>))
+                    )).map((item) => (<Row key={item.id}><QuestionView question={item}/></Row>))
                     }
                   </Container>
                 </TabPane>
@@ -77,8 +76,7 @@ class Dashboard extends Component {
                     {this.props.questions !==null && this.state.filterQuestions !== null &&
                     Object.values(this.props.questions).filter((item) => (
                       !(Object.keys(this.state.filterQuestions).includes(item.id))
-                    )).map((item) => (<Row key={item.id}><Question user={this.props.loggedInUser}
-                               saveQuestion={this.props.saveQuestionThunk} question={item}/></Row>))
+                    )).map((item) => (<Row key={item.id}><QuestionView question={item}/></Row>))
                     }
                   </Container>
                 </TabPane>

@@ -6,16 +6,17 @@ import {getUsersThunk , getQuestionsThunk , loggedUser } from "./Actions";
 import Login from "./components/Login";
 import Dashboard from './components/Dashboard'
 import AddQuestion from './components/AddQuestion'
-
+import Question from './components/Question'
+import Leadersboard from "./components/Leadersboard";
 
 
 class App extends React.Component {
 
   componentDidMount() {
-    if (localStorage.getItem("state") === null) {
+
       this.props.getUsersThunk();
       this.props.getQuestionsThunk()
-    }
+
       console.log(this.props)
   }
 
@@ -36,6 +37,8 @@ class App extends React.Component {
                          render={() => <Login loggedUser={this.props.loggedUser}
                                               users={Object.values(this.props.users)}/>}/>
                   <Route path="/AddQuestion" component={AddQuestion}/>
+                  <Route path="/question/:questionID" component={Question}/>
+                  <Route path="/leaderboard" component={Leadersboard}/>
                 </div>
               }
 

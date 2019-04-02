@@ -58,20 +58,23 @@ export const getQuestionsThunk = () => {
     }
 }
 
+
+//for answering a question
 export const saveQuestionThunk = (authedUser,qid,answer) => {
     return async dispatch => {
         try{
             console.log("Reached action from saveQuestionthunk")
             await _saveQuestionAnswer({authedUser,qid,answer});
-            const users = await _getUsers();
-            console.log("--------------",users)
-            dispatch(getUsersThunk(users));
+            dispatch(getQuestionsThunk());
+            dispatch(getUsersThunk());
         } catch (e) {
             dispatch(error(e))
         }
     }
 }
 
+
+//for adding a question
 export const addQuestionThunk = (question) => {
     return async dispatch => {
         try{
